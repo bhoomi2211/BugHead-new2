@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "Issuecreator"
+    "Issuecreator",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",  # This should come first
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -128,3 +130,54 @@ MEDIA_ROOT= BASE_DIR.joinpath("media")
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Add these settings
+# You should use environment variables for these in production
+GITHUB_TOKEN = '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'  # Personal access token with repo permissions
+GEMINI_API_KEY = 'AIzaSyCM5VboRgA09EqHcoWcFUXqkCTK9800PLg'  # Google Gemini API key
+
+# Allow all origins for the widget script and API endpoints
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Allow credentials
+CORS_ALLOW_CREDENTIALS = True
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} {levelname} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'bughead.log',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'Issuecreator': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}
