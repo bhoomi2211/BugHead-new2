@@ -18,8 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from . import views
 
 
 urlpatterns = [
     # path("admin/", admin.site.urls)
+    path('api/issues/', views.create_issue, name='create_issue'),
+    path('api/websites/', views.website_list, name='website_list'),
+    path('widget/<uuid:site_key>.js', views.get_widget_script, name='widget_script'),
 ]

@@ -1,0 +1,95 @@
+2025-05-04 02:11:17,825 INFO issueHandler Handling new issue with ID: 10
+2025-05-04 02:11:17,826 INFO issueHandler Processing issue with ID: 10
+2025-05-04 02:11:17,827 ERROR issueHandler Unexpected error processing issue 10: You cannot call this from an async context - use a thread or sync_to_async.
+Traceback (most recent call last):
+  File "D:\Batches\Project Training 2025\projects\BugHead-new2\Issuecreator\issueHandler.py", line 210, in process_issue
+    issue = Issue.objects.get(id=issue_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1560, in execute_sql
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\asyncio.py", line 24, in inner
+    raise SynchronousOnlyOperation(message)
+django.core.exceptions.SynchronousOnlyOperation: You cannot call this from an async context - use a thread or sync_to_async.
+2025-05-04 02:11:17,852 INFO issueHandler Issue processing completed: {'error': 'You cannot call this from an async context - use a thread or sync_to_async.'}
+2025-05-04 02:14:00,991 INFO issueHandler Handling new issue with ID: 11
+2025-05-04 02:14:00,992 INFO issueHandler Processing issue with ID: 11
+2025-05-04 02:14:00,995 DEBUG issueHandler Found issue: Dashboard2
+2025-05-04 02:14:00,996 ERROR issueHandler Unexpected error processing issue 11: You cannot call this from an async context - use a thread or sync_to_async.
+Traceback (most recent call last):
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 218, in __get__
+    rel_obj = self.field.get_cached_value(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\fields\mixins.py", line 15, in get_cached_value
+    return instance._state.fields_cache[cache_name]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'website'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Batches\Project Training 2025\projects\BugHead-new2\Issuecreator\issueHandler.py", line 226, in process_issue
+    if not issue.website:
+           ^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 236, in __get__
+    rel_obj = self.get_object(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 199, in get_object
+    return qs.get(self.field.get_reverse_related_filter(instance))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1560, in execute_sql
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LOQ\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\asyncio.py", line 24, in inner
+    raise SynchronousOnlyOperation(message)
+django.core.exceptions.SynchronousOnlyOperation: You cannot call this from an async context - use a thread or sync_to_async.
+2025-05-04 02:14:01,027 INFO issueHandler Issue processing completed: {'error': 'You cannot call this from an async context - use a thread or sync_to_async.'}
+2025-05-04 02:23:19,720 DEBUG issueHandler Extracting repo info from: https://github.com/m-triple-m/issue-tracker-test-repo
+2025-05-04 02:23:19,720 DEBUG issueHandler Extracting repo info from URL: https://github.com/m-triple-m/issue-tracker-test-repo
+2025-05-04 02:23:19,721 DEBUG issueHandler Successfully extracted owner: m-triple-m, repo: issue-tracker-test-repo
+2025-05-04 02:23:19,721 DEBUG issueHandler Prepared issue data: {'bugArea': 'Dashboard', 'priority': 'high', 'IssueDetail': 'sdf', 'Device': 'Desktop', 'Browse': 'Chrome', 'OperatingSystem': 'Windows'}
+2025-05-04 02:23:19,722 DEBUG issueHandler Using basic issue data without AI enhancement
+2025-05-04 02:23:19,722 INFO issueHandler Creating GitHub issue in m-triple-m/issue-tracker-test-repo
+2025-05-04 02:23:19,722 INFO issueHandler Creating GitHub issue in m-triple-m/issue-tracker-test-repo
+2025-05-04 02:23:19,722 DEBUG issueHandler Issue title: Dashboard: sdf
+2025-05-04 02:23:19,722 DEBUG issueHandler GitHub API payload prepared with labels: ['bug']
+2025-05-04 02:23:19,722 DEBUG issueHandler Sending request to GitHub API: https://api.github.com/repos/m-triple-m/issue-tracker-test-repo/issues
+2025-05-04 02:23:20,409 INFO issueHandler GitHub issue created successfully: https://github.com/m-triple-m/issue-tracker-test-repo/issues/1
+2025-05-04 02:23:20,410 INFO issueHandler GitHub issue created successfully: https://github.com/m-triple-m/issue-tracker-test-repo/issues/1
+2025-05-04 09:41:51,037 DEBUG issueHandler Extracting repo info from: https://github.com/m-triple-m/issue-tracker-test-repo
+2025-05-04 09:41:51,037 DEBUG issueHandler Extracting repo info from URL: https://github.com/m-triple-m/issue-tracker-test-repo
+2025-05-04 09:41:51,037 DEBUG issueHandler Successfully extracted owner: m-triple-m, repo: issue-tracker-test-repo
+2025-05-04 09:41:51,037 DEBUG issueHandler Prepared issue data: {'bugArea': 'Login Page', 'priority': 'low', 'IssueDetail': 'ui issue', 'Device': 'Mobile', 'Browse': 'Chrome', 'OperatingSystem': 'Android'}
+2025-05-04 09:41:51,037 DEBUG issueHandler Using basic issue data without AI enhancement
+2025-05-04 09:41:51,041 INFO issueHandler Creating GitHub issue in m-triple-m/issue-tracker-test-repo
+2025-05-04 09:41:51,041 INFO issueHandler Creating GitHub issue in m-triple-m/issue-tracker-test-repo
+2025-05-04 09:41:51,041 DEBUG issueHandler Issue title: Login Page: ui issue
+2025-05-04 09:41:51,043 DEBUG issueHandler GitHub API payload prepared with labels: ['bug']
+2025-05-04 09:41:51,043 DEBUG issueHandler Sending request to GitHub API: https://api.github.com/repos/m-triple-m/issue-tracker-test-repo/issues
+2025-05-04 09:41:51,849 INFO issueHandler GitHub issue created successfully: https://github.com/m-triple-m/issue-tracker-test-repo/issues/2
+2025-05-04 09:41:51,849 INFO issueHandler GitHub issue created successfully: https://github.com/m-triple-m/issue-tracker-test-repo/issues/2
