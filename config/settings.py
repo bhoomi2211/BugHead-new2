@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import tempfile
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -143,6 +145,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 # Logging configuration
+log_file = os.path.join(tempfile.gettempdir(), 'bughead.log')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -165,7 +169,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'bughead.log',
+            'filename': log_file,  # Use system temp directory
             'formatter': 'verbose',
         },
     },
