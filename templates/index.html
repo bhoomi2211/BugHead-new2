@@ -1,11 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bughead - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes gradientBG {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+  </style>
 </head>
-<body>
-    <h1>Django homepage</h1>
-</body>
-</html>
+
+<body class="bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 bg-[length:200%_200%] animate-[gradientBG_10s_ease_infinite]">
+
+  <!-- Logo -->
+  <div class="p-4 bg-gray-900">
+    <a href="/" class="inline-flex items-center gap-2.5 text-2xl font-bold text-white md:text-3xl" aria-label="logo">
+      <svg width="95" height="94" viewBox="0 0 95 94" class="h-auto w-6 text-white" fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M96 0V47L48 94H0V47L48 0H96Z" />
+      </svg>
+      BUGHEAD
+    </a>
+  </div>
+
+  <!-- Navigation -->
+  <!-- Navigation -->
+<!-- Navigation -->
+<!-- Navigation -->
+ 
+<nav class="bg-black-500 bg-blue-700 px-4 py-2 flex flex-wrap items-center ">
+  <!-- Left-aligned links -->
+  <div class="flex gap-4 items-center">
+    <a href="#" class="text-lg font-semibold text-white hover:text-indigo-200">Home</a>
+    <a href="bug-tracker.html" class="text-lg font-semibold text-white hover:text-indigo-200">Bug Tracker</a>
+    <a href="about.html" class="text-lg font-semibold text-white hover:text-indigo-200">About</a>
+    <a href="#" class="text-lg font-semibold text-white hover:text-indigo-200">Contact Us</a>
+  </div>
+
+  <!-- Right-aligned buttons -->
+  <div class="ml-auto flex gap-4 ">
+    <a href="login.html" class="bg-white text-blue-600 rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-100">Login</a>
+    <a href="sign-in.html" class="bg-white text-blue-600 rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-100">Sign Up</a>
+  </div>
+</nav>
+
+
+
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-16 bg-[url('https://png.pngtree.com/thumb_back/fh260/background/20230415/pngtree-website-technology-line-dark-background-image_2344719.jpg')] bg-cover bg-center">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-blue-200 drop-shadow-md mb-6">Welcome to Bughead</h1>
+    <p class="text-lg md:text-xl text-blue-100 max-w-2xl mb-8">
+      Help us make the web bug-free! Report website issues quickly and let developers fix them fast.
+    </p>
+    <a href="report-bug.html">
+      <button class="bg-white text-black-400 px-8 py-3 rounded-full shadow-lg hover:scale-105 hover:bg-blue-700 transition-all duration-300">
+        Report a Bug 🚀 
+      </button>
+    </a>
+  </section>
+  
+
+  <!-- Features Section -->
+  <section class="bg-white py-12 px-6">
+    <div class="max-w-7xl mx-auto text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Why Bughead?</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Designed for users and developers to collaborate on creating flawless web experiences.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="bg-gradient-to-br from-blue-100 to-white p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold text-blue-700 mb-2">📝 Easy Reporting</h3>
+        <p class="text-gray-600">Submit detailed bug reports with environment info, screenshots, and more in seconds.</p>
+      </div>
+      <div class="bg-gradient-to-br from-purple-100 to-white p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold text-purple-700 mb-2">⏱ Real-Time Feedback</h3>
+        <p class="text-gray-600">Get real-time updates from developers as your issue gets reviewed and resolved.</p>
+      </div>
+      <div class="bg-gradient-to-br from-indigo-100 to-white p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold text-indigo-700 mb-2">🔒 Secure Platform</h3>
+        <p class="text-gray-600">Your reports are protected with encryption and securely managed through our system.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <main class="bg-white py-6 sm:py-8 lg:py-12">
+    <div class="mx-auto max-w-screen-xl px-4 md:px-8">
+      <div class="grid gap-8 md:grid-cols-2 lg:gap-12">
+        <div>
+          <div class="h-97 overflow-hidden rounded-lg bg-gray-900 shadow-lg md:h-auto">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBTP-Y1-UBrcRNN0l3JJhl4k8Jscmz1voa7A&s"
+              loading="lazy" alt="Illustration" class="h-full w-full object-cover object-center" />
+          </div>
+        </div>
+        <div class="md:pt-8">
+          <p class="text-center font-bold text-indigo-500 md:text-left">Who we are</p>
+          <h1 class="mb-4 text-center text-2xl font-bold text-gray-800 sm:text-3xl md:mb-6 md:text-left">Our Competitive Advantage</h1>
+          <p class="mb-6 text-gray-500 sm:text-lg md:mb-8">
+            Bughead simplifies bug reporting with intuitive tools and smooth developer feedback channels.
+          </p>
+
+          <h2 class="mb-2 text-center text-xl font-semibold text-gray-800 sm:text-2xl md
