@@ -79,8 +79,7 @@ def website_list(request):
             # Associate with user if authenticated
             if request.user.is_authenticated:
                 website.user = request.user
-                website.save()
-                
+                website.save()   
             return Response({
                 'message': 'Website created successfully',
                 'website': WebsiteSerializer(website).data
