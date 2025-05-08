@@ -93,3 +93,39 @@ django.core.exceptions.SynchronousOnlyOperation: You cannot call this from an as
 2025-05-04 09:41:51,043 DEBUG issueHandler Sending request to GitHub API: https://api.github.com/repos/m-triple-m/issue-tracker-test-repo/issues
 2025-05-04 09:41:51,849 INFO issueHandler GitHub issue created successfully: https://github.com/m-triple-m/issue-tracker-test-repo/issues/2
 2025-05-04 09:41:51,849 INFO issueHandler GitHub issue created successfully: https://github.com/m-triple-m/issue-tracker-test-repo/issues/2
+2025-05-04 16:30:13,359 DEBUG issueHandler Extracting repo info from: https://github.com/bhoomi2211/sample-repo
+2025-05-04 16:30:13,359 DEBUG issueHandler Extracting repo info from URL: https://github.com/bhoomi2211/sample-repo
+2025-05-04 16:30:13,366 DEBUG issueHandler Successfully extracted owner: bhoomi2211, repo: sample-repo
+2025-05-04 16:30:13,367 DEBUG issueHandler Prepared issue data: {'bugArea': 'Dashboard', 'priority': 'medium', 'IssueDetail': 'whenever i want to view my profile it show network error', 'Device': 'Desktop', 'Browse': 'Chrome', 'OperatingSystem': 'Windows'}
+2025-05-04 16:30:13,370 DEBUG issueHandler Using basic issue data without AI enhancement
+2025-05-04 16:30:13,370 INFO issueHandler Creating GitHub issue in bhoomi2211/sample-repo
+2025-05-04 16:30:13,370 INFO issueHandler Creating GitHub issue in bhoomi2211/sample-repo
+2025-05-04 16:30:13,370 DEBUG issueHandler Issue title: Dashboard: whenever i want to view my profile it show network
+2025-05-04 16:30:13,375 DEBUG issueHandler GitHub API payload prepared with labels: ['bug']
+2025-05-04 16:30:13,375 DEBUG issueHandler Sending request to GitHub API: https://api.github.com/repos/bhoomi2211/sample-repo/issues
+2025-05-04 16:30:13,902 ERROR issueHandler GitHub API error: 401 - {"message":"Bad credentials","documentation_url":"https://docs.github.com/rest","status":"401"}
+2025-05-04 16:30:13,902 ERROR issueHandler Failed to create GitHub issue: GitHub API error: 401 - {"message":"Bad credentials","documentation_url":"https://docs.github.com/rest","status":"401"}
+2025-05-04 16:32:42,180 DEBUG issueHandler Extracting repo info from: https://github.com/bhoomi2211/sample-repo
+2025-05-04 16:32:42,180 DEBUG issueHandler Extracting repo info from URL: https://github.com/bhoomi2211/sample-repo
+2025-05-04 16:32:42,180 DEBUG issueHandler Successfully extracted owner: bhoomi2211, repo: sample-repo
+2025-05-04 16:32:42,193 DEBUG issueHandler Prepared issue data: {'bugArea': 'User Profile', 'priority': 'high', 'IssueDetail': 'whenever i want to view my profile it says network issue', 'Device': 'Desktop', 'Browse': 'Chrome', 'OperatingSystem': 'Windows'}
+2025-05-04 16:32:42,194 DEBUG issueHandler Using basic issue data without AI enhancement
+2025-05-04 16:32:42,195 INFO issueHandler Creating GitHub issue in bhoomi2211/sample-repo
+2025-05-04 16:32:42,196 INFO issueHandler Creating GitHub issue in bhoomi2211/sample-repo
+2025-05-04 16:32:42,196 DEBUG issueHandler Issue title: User Profile: whenever i want to view my profile it says network
+2025-05-04 16:32:42,196 DEBUG issueHandler GitHub API payload prepared with labels: ['bug']
+2025-05-04 16:32:42,196 DEBUG issueHandler Sending request to GitHub API: https://api.github.com/repos/bhoomi2211/sample-repo/issues
+2025-05-04 16:32:43,007 INFO issueHandler GitHub issue created successfully: https://github.com/bhoomi2211/sample-repo/issues/3
+2025-05-04 16:32:43,007 INFO issueHandler GitHub issue created successfully: https://github.com/bhoomi2211/sample-repo/issues/3
+2025-05-04 16:36:52,793 DEBUG issueHandler Extracting repo info from: https://github.com/bhoomi2211/sample-repo
+2025-05-04 16:36:52,794 DEBUG issueHandler Extracting repo info from URL: https://github.com/bhoomi2211/sample-repo
+2025-05-04 16:36:52,795 DEBUG issueHandler Successfully extracted owner: bhoomi2211, repo: sample-repo
+2025-05-04 16:36:52,796 DEBUG issueHandler Prepared issue data: {'bugArea': 'sign in page', 'priority': 'high', 'IssueDetail': 'Login details are incorrect', 'Device': 'Desktop', 'Browse': 'Chrome', 'OperatingSystem': 'Windows'}
+2025-05-04 16:36:52,797 DEBUG issueHandler Using basic issue data without AI enhancement
+2025-05-04 16:36:52,797 INFO issueHandler Creating GitHub issue in bhoomi2211/sample-repo
+2025-05-04 16:36:52,798 INFO issueHandler Creating GitHub issue in bhoomi2211/sample-repo
+2025-05-04 16:36:52,799 DEBUG issueHandler Issue title: sign in page: Login details are incorrect
+2025-05-04 16:36:52,800 DEBUG issueHandler GitHub API payload prepared with labels: ['bug']
+2025-05-04 16:36:52,800 DEBUG issueHandler Sending request to GitHub API: https://api.github.com/repos/bhoomi2211/sample-repo/issues
+2025-05-04 16:36:53,581 INFO issueHandler GitHub issue created successfully: https://github.com/bhoomi2211/sample-repo/issues/4
+2025-05-04 16:36:53,581 INFO issueHandler GitHub issue created successfully: https://github.com/bhoomi2211/sample-repo/issues/4
