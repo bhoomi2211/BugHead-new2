@@ -133,7 +133,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Add these settings
 # You should use environment variables for these in production
-GITHUB_TOKEN = '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'  # Personal access token with repo permissions
+GITHUB_TOKEN = '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'  # Personal access token with repo permissions
 GEMINI_API_KEY = 'AIzaSyCM5VboRgA09EqHcoWcFUXqkCTK9800PLg'  # Google Gemini API key
 
 # Allow all origins for the widget script and API endpoints
