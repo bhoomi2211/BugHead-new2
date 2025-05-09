@@ -1,7 +1,7 @@
 import asyncio
 import threading
 import os  # Add this for the widget script function
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -15,6 +15,10 @@ from .serializers import IssueSerializer, WebsiteSerializer
 from .issueHandler import handle_new_issue, handle_issue_sync
 from django.conf import settings
 from asgiref.sync import sync_to_async
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -100,3 +104,132 @@ def get_widget_script(request, site_key):
         return HttpResponse(script, content_type='application/javascript')
     except Website.DoesNotExist:
         return HttpResponse('console.error("Invalid site key");', content_type='application/javascript')
+
+def register_view(request):
+    """
+    View for handling user registration
+    """
+    if request.user.is_authenticated:
+        return redirect('dashboard')  # Redirect if already logged in
+    
+    if request.method == "POST":
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        terms = request.POST.get('terms')
+        
+        # Validation
+        if not terms:
+            messages.error(request, "You must accept the Terms of Service and Privacy Policy.")
+            return render(request, 'register.html')
+            
+        if password1 != password2:
+            messages.error(request, "Passwords don't match.")
+            return render(request, 'register.html')
+        
+        if len(password1) < 8:
+            messages.error(request, "Password must be at least 8 characters long.")
+            return render(request, 'register.html')
+        
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username is already taken.")
+            return render(request, 'register.html')
+        
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email is already registered.")
+            return render(request, 'register.html')
+        
+        # Create user
+        try:
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            
+            # Log the user in
+            login(request, user)
+            messages.success(request, "Registration successful! Welcome to BugHead.")
+            return redirect('dashboard')
+        except Exception as e:
+            messages.error(request, f"An error occurred during registration: {str(e)}")
+    
+    return render(request, 'register.html')
+
+@login_required
+def dashboard(request):
+    """
+    Dashboard view for authenticated users to manage their websites
+    """
+    # Get all websites owned by the current user
+    websites = Website.objects.filter(user=request.user).order_by('-create_at')
+    
+    return render(request, 'dashboard.html', {
+        'websites': websites
+    })
+
+@login_required
+def website_detail(request, site_key):
+    """
+    View for managing a specific website and getting embed code
+    """
+    website = get_object_or_404(Website, site_key=site_key, user=request.user)
+    
+    # Get all issues reported for this website
+    # Using 'id' for ordering instead of 'created_at'
+    issues = Issue.objects.filter(website=website).order_by('-id')  # Changed from 'created_at' to 'id'
+    
+    # Generate widget embed code for this website
+    embed_code = f'<script src="{request.scheme}://{request.get_host()}/widget/{site_key}.js"></script>'
+    
+    return render(request, 'website_detail.html', {
+        'website': website,
+        'issues': issues,
+        'embed_code': embed_code
+    })
+
+@login_required
+def add_website(request):
+    """
+    View for adding a new website
+    """
+    if request.method == "POST":
+        owner = request.POST.get('owner')
+        website_link = request.POST.get('website_link')
+        github_repo = request.POST.get('github_repo')
+        
+        # Validate inputs
+        if not all([owner, website_link, github_repo]):
+            messages.error(request, "All fields are required.")
+            return render(request, 'add_website.html')
+        
+        try:
+            # Create new website
+            website = Website.objects.create(
+                user=request.user,
+                owner=owner,
+                websitelink=website_link,
+                gitHubRepo=github_repo
+            )
+            
+            messages.success(request, f"Website added successfully! Your site key is: {website.site_key}")
+            return redirect('website_detail', site_key=website.site_key)
+        
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
+    
+    return render(request, 'add_website.html')
+
+@login_required
+def delete_website(request, site_key):
+    """
+    View for deleting a website
+    """
+    website = get_object_or_404(Website, site_key=site_key, user=request.user)
+    
+    if request.method == "POST":
+        website_name = website.websitelink
+        website.delete()
+        messages.success(request, f"Website '{website_name}' has been deleted.")
+        return redirect('dashboard')
+    
+    return render(request, 'delete_website_confirm.html', {
+        'website': website
+    })

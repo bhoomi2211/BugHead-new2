@@ -1,9 +1,7 @@
 from django.db import models
-import uuid
 from django.contrib.auth.models import User
+import uuid
 
-# Create your models here.
-  
 class Website(models.Model):
     owner = models.CharField(max_length=150)
     websitelink = models.CharField(max_length=50)
@@ -18,14 +16,16 @@ class Website(models.Model):
     
 class Issue(models.Model):
     bugArea = models.CharField(max_length=200)   
-    priority = models.TextField()
-    IssueDetail = models.CharField(max_length=150)
+    priority = models.CharField(max_length=50)  
+    IssueDetail = models.TextField()
     Device = models.CharField(max_length=50)
-    Browse = models.CharField(max_length=100)
-    OperatingSystem = models.CharField(max_length=100)
-    website = models.ForeignKey(Website, on_delete=models.CASCADE, related_name='issues', null=True)
+    Browse = models.CharField(max_length=50)
+    OperatingSystem = models.CharField(max_length=50)
+    website = models.ForeignKey('Website', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.bugArea
+        return f"{self.bugArea}: {self.IssueDetail[:50]}"
 
 

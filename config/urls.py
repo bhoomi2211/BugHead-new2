@@ -23,8 +23,6 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", TemplateView.as_view(template_name="index.html"),name="home"),
-    path("login/",TemplateView.as_view(template_name="login.html"),name="login"),
-    path("signin/",TemplateView.as_view(template_name="sign-in.html"),name="signin"),
     path("Home/",TemplateView.as_view(template_name="home.html"),name="Home"),
     path("register/" , TemplateView.as_view(template_name="register.html"), name= "register") ,
     path("issueForm/" , TemplateView.as_view(template_name="issueForm.html"), name= "issueForm") ,
@@ -32,5 +30,6 @@ urlpatterns = [
     path("report-bug/" , TemplateView.as_view(template_name="report-bug.html"), name= "report-bug"),
     path("Bug-Traker/" , TemplateView.as_view(template_name="Bug-tracker.html"), name= "Bug-Tracker"),
     path("add-website/" , TemplateView.as_view(template_name="add-website.html"), name= "add-website"),
+    path("", include("authentication.urls")),
     path("", include("Issuecreator.urls") ),
 ]
