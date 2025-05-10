@@ -1,31 +1,63 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In - Bughead</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen text-white">
 
-{% block content %}
+  <!-- Sign In Container -->
+  <div class="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md animate-fade-in">
+    <h2 class="text-3xl font-semibold text-center mb-6 bg-blue-700 py-3 rounded-md">Sign In</h2>
 
-<body class="flex items-center justify-center min-h-screen bg-gray-100" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThRlluQ0_wkTQt6t3DNGXL25eX1daLmF7u6w&s);">
-    <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-2xl font-semibold text-center text-gray-700">Create Account</h2>
-        <form class="mt-4">
-            <div>
-                <label class="block text-gray-600">Full Name</label>
-                <input type="text" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your full name">
-            </div>
-            <div class="mt-4">
-                <label class="block text-gray-600">Email</label>
-                <input type="email" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email">
-            </div>
-            <div class="mt-4">
-                <label class="block text-gray-600">Password</label>
-                <input type="password" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Create a password">
-            </div>
-            <div class="mt-4">
-                <label class="block text-gray-600">Confirm Password</label>
-                <input type="password" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Confirm your password">
-            </div>
-            <button class="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Sign Up</button>
-            <p class="mt-4 text-center text-gray-600">Already have an account? <a href="#" class="text-blue-500 hover:underline">Sign In</a></p>
-        </form>
-    </div>
+    <form action="#" method="POST" class="space-y-5">
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm mb-1">Email Address</label>
+        <input type="email" id="email" name="email" required
+               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm mb-1">Password</label>
+        <input type="password" id="password" name="password" required
+               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Forgot password link -->
+      <div class="text-right text-sm">
+        <a href="#" class="text-blue-400 hover:text-blue-500">Forgot password?</a>
+      </div>
+
+      <!-- Submit -->
+      <div>
+        <button type="submit"
+                class="w-full py-3 bg-blue-600 hover:bg-blue-700 transition rounded text-white font-semibold shadow-md">
+          Sign In
+        </button>
+      </div>
+    </form>
+
+    <!-- Sign Up link -->
+    <p class="text-center text-sm mt-6">
+      Don’t have an account?
+      <a href="#" class="text-blue-400 hover:text-blue-500">Sign Up</a>
+    </p>
+  </div>
+
+  <!-- Tailwind animation keyframes -->
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.6s ease-out;
+    }
+  </style>
+
 </body>
-
-{% endblock content %}
+</html>

@@ -1,113 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bughead - Home</title>
+  <title>Bughead - Modern Bug Tracking</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+              950: '#2e1065',
+            },
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-slow': 'bounce 3s infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            glow: {
+              '0%': { boxShadow: '0 0 5px rgba(139, 92, 246, 0.5)' },
+              '100%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.8)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    @keyframes gradientBG {
-      0%, 100% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .bg-grid {
+      background-image: 
+        linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    
+    .bg-mesh {
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(79, 70, 229, 0.15) 0%, transparent 50%);
+    }
+    
+    .glass {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .hover-up {
+      transition: transform 0.3s ease-out;
+    }
+    
+    .hover-up:hover {
+      transform: translateY(-5px);
+    }
+    
+    .line-indicator::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #8b5cf6;
+      transition: width 0.3s ease;
+    }
+    
+    .line-indicator:hover::after {
+      width: 100%;
+    }
+    
+    .text-shadow {
+      text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
     }
   </style>
 </head>
 
-<body class="bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 bg-[length:200%_200%] animate-[gradientBG_10s_ease_infinite]">
-
-  <!-- Logo -->
-  <div class="p-4 bg-gray-900">
-    <a href="/" class="inline-flex items-center gap-2.5 text-2xl font-bold text-white md:text-3xl" aria-label="logo">
-      <svg width="95" height="94" viewBox="0 0 95 94" class="h-auto w-6 text-white" fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg">
-        <path d="M96 0V47L48 94H0V47L48 0H96Z" />
-      </svg>
-      BUGHEAD
-    </a>
-  </div>
-
-  <!-- Navigation -->
-  <!-- Navigation -->
-<!-- Navigation -->
-<!-- Navigation -->
- 
-<nav class="bg-black-500 bg-blue-700 px-4 py-2 flex flex-wrap items-center ">
-  <!-- Left-aligned links -->
-  <div class="flex gap-4 items-center">
-    <a href="#" class="text-lg font-semibold text-white hover:text-indigo-200">Home</a>
-    <a href="bug-tracker.html" class="text-lg font-semibold text-white hover:text-indigo-200">Bug Tracker</a>
-    <a href="about.html" class="text-lg font-semibold text-white hover:text-indigo-200">About</a>
-    <a href="#" class="text-lg font-semibold text-white hover:text-indigo-200">Contact Us</a>
-  </div>
-
-  <!-- Right-aligned buttons -->
-  <div class="ml-auto flex gap-4 ">
-    <a href="login.html" class="bg-white text-blue-600 rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-100">Login</a>
-    <a href="sign-in.html" class="bg-white text-blue-600 rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-100">Sign Up</a>
-  </div>
-</nav>
-
-
-
+<body class="bg-slate-950 bg-mesh bg-grid text-gray-100 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-4">
+        <a href="/" class="flex items-center space-x-2">
+          <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-900 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 0C22.39 0 0 22.39 0 50s22.39 50 50 50c27.61 0 50-22.39 50-50H60c-5.52 0-10 4.48-10 10v10c0 5.52 4.48 10 10 10h20c0 16.57-13.43 30-30 30S20 66.57 20 50 33.43 20 50 20h40C90 8.96 70.82 0 50 0z"/>
+            </svg>
+          </div>
+          <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-primary-500">BUGHEAD</span>
+        </a>
+        
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center space-x-6">
+          <a href="#" class="line-indicator relative text-gray-300 hover:text-white">Home</a>
+          <a href="bug-tracker.html" class="line-indicator relative text-gray-300 hover:text-white">Bug Tracker</a>
+          <a href="about.html" class="line-indicator relative text-gray-300 hover:text-white">About</a>
+          <a href="#" class="line-indicator relative text-gray-300 hover:text-white">Contact</a>
+        </nav>
+        
+        <div class="hidden md:flex items-center space-x-4">
+          <a href="login.html" class="px-5 py-2 rounded-lg text-gray-200 border border-gray-700 hover:border-primary-500 transition duration-300">Login</a>
+          <a href="signup.html" class="px-5 py-2 rounded-lg bg-gradient-to-r from-primary-600 to-primary-800 text-white transition duration-300 animate-glow hover:from-primary-500 hover:to-primary-700">Sign Up</a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="md:hidden text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden glass">
+      <div class="py-2 space-y-1">
+        <a href="#" class="block px-4 py-2 hover:bg-primary-900 hover:bg-opacity-30">Home</a>
+        <a href="bug-tracker.html" class="block px-4 py-2 hover:bg-primary-900 hover:bg-opacity-30">Bug Tracker</a>
+        <a href="about.html" class="block px-4 py-2 hover:bg-primary-900 hover:bg-opacity-30">About</a>
+        <a href="#" class="block px-4 py-2 hover:bg-primary-900 hover:bg-opacity-30">Contact</a>
+        <div class="pt-2 px-4 space-y-2">
+          <a href="login.html" class="block px-4 py-2 text-center rounded-lg text-gray-200 border border-gray-700 hover:border-primary-500">Login</a>
+          <a href="signup.html" class="block px-4 py-2 text-center rounded-lg bg-gradient-to-r from-primary-600 to-primary-800 text-white">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <!-- Hero Section -->
-  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-16 bg-[url('https://png.pngtree.com/thumb_back/fh260/background/20230415/pngtree-website-technology-line-dark-background-image_2344719.jpg')] bg-cover bg-center">
-    <h1 class="text-5xl md:text-6xl font-extrabold text-blue-200 drop-shadow-md mb-6">Welcome to Bughead</h1>
-    <p class="text-lg md:text-xl text-blue-100 max-w-2xl mb-8">
-      Help us make the web bug-free! Report website issues quickly and let developers fix them fast.
-    </p>
-    <a href="report-bug.html">
-      <button class="bg-white text-black-400 px-8 py-3 rounded-full shadow-lg hover:scale-105 hover:bg-blue-700 transition-all duration-300">
-        Report a Bug 🚀 
-      </button>
-    </a>
+  <section class="relative flex flex-col items-center justify-center py-24 md:py-32 px-4">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-32 -left-32 w-64 h-64 bg-primary-600 rounded-full filter blur-3xl opacity-20"></div>
+      <div class="absolute -bottom-32 -right-32 w-64 h-64 bg-primary-800 rounded-full filter blur-3xl opacity-20"></div>
+    </div>
+    
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-950/80 pointer-events-none"></div>
+    
+    <div class="relative max-w-4xl mx-auto text-center z-10">
+      <div class="w-24 h-24 mb-8 mx-auto relative">
+        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-primary-400 to-primary-700 animate-pulse-slow"></div>
+        <div class="absolute inset-2 rounded-full bg-slate-950 flex items-center justify-center">
+          <svg class="w-12 h-12 text-primary-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 0C22.39 0 0 22.39 0 50s22.39 50 50 50c27.61 0 50-22.39 50-50H60c-5.52 0-10 4.48-10 10v10c0 5.52 4.48 10 10 10h20c0 16.57-13.43 30-30 30S20 66.57 20 50 33.43 20 50 20h40C90 8.96 70.82 0 50 0z"/>
+          </svg>
+        </div>
+      </div>
+      
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-shadow">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-primary-200 to-primary-500">
+          Debugging Made Simple
+        </span>
+      </h1>
+      
+      <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-12">
+        The intelligent platform that streamlines bug reporting and tracking, 
+        helping your team catch and fix issues before they impact users.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="report-bug.html" class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-800 hover:from-primary-500 hover:to-primary-700 rounded-lg text-white font-medium shadow-lg shadow-primary-800/30 transition duration-300 flex items-center justify-center gap-2 group">
+          Report a Bug
+          <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+        
+        <a href="#learn-more" class="w-full sm:w-auto px-8 py-3 border border-gray-700 hover:border-primary-500 rounded-lg text-gray-300 hover:text-white transition duration-300">
+          Learn More
+        </a>
+      </div>
+    </div>
+    
+    <!-- Wave Divider -->
+    <div class="absolute bottom-0 left-0 right-0 overflow-hidden">
+      <svg class="w-full h-auto text-slate-900" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
+        <path d="M0,40 C240,100 720,0 1440,60 L1440,100 L0,100 Z"></path>
+      </svg>
+    </div>
   </section>
-  
 
   <!-- Features Section -->
-  <section class="bg-white py-12 px-6">
-    <div class="max-w-7xl mx-auto text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Why Bughead?</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">
-        Designed for users and developers to collaborate on creating flawless web experiences.
-      </p>
+  <section id="learn-more" class="relative bg-slate-900 py-24 px-4">
+    <div class="container mx-auto max-w-7xl">
+      <div class="text-center mb-16">
+        <h2 class="inline-block text-3xl md:text-4xl font-bold mb-4 relative">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-primary-500">Why Choose Bughead?</span>
+          <span class="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-primary-600"></span>
+        </h2>
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+          Our platform offers a seamless experience for both developers and users, with powerful features designed to streamline the debugging process.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="glass rounded-xl p-6 hover-up">
+          <div class="w-12 h-12 mb-6 rounded-lg bg-primary-900 flex items-center justify-center text-primary-400">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Smart Bug Tracking</h3>
+          <p class="text-gray-400">
+            Our AI-powered system automatically categorizes and prioritizes bugs based on impact and frequency, so your team can focus on what matters most.
+          </p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="glass rounded-xl p-6 hover-up">
+          <div class="w-12 h-12 mb-6 rounded-lg bg-primary-900 flex items-center justify-center text-primary-400">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Visual Reporting</h3>
+          <p class="text-gray-400">
+            Capture screenshots, record sessions, and annotate directly in the platform to communicate issues clearly and eliminate back-and-forth.
+          </p>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="glass rounded-xl p-6 hover-up">
+          <div class="w-12 h-12 mb-6 rounded-lg bg-primary-900 flex items-center justify-center text-primary-400">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Real-time Collaboration</h3>
+          <p class="text-gray-400">
+            Comment, assign, and resolve bugs with your team in real-time with an integrated notification system that keeps everyone in the loop.
+          </p>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="glass rounded-xl p-6 hover-up">
+          <div class="w-12 h-12 mb-6 rounded-lg bg-primary-900 flex items-center justify-center text-primary-400">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Analytics Dashboard</h3>
+          <p class="text-gray-400">
+            Track resolution times, recurring issues, and team performance with comprehensive analytics that help you continuously improve.
+          </p>
+        </div>
+        
+        <!-- Feature 5 -->
+        <div class="glass rounded-xl p-6 hover-up">
+          <div class="w-12 h-12 mb-6 rounded-lg bg-primary-900 flex items-center justify-center text-primary-400">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Enterprise Security</h3>
+          <p class="text-gray-400">
+            Rest easy with SOC 2 compliance, encrypted data storage, and configurable access controls designed for enterprise environments.
+          </p>
+        </div>
+        
+        <!-- Feature 6 -->
+        <div class="glass rounded-xl p-6 hover-up">
+          <div class="w-12 h-12 mb-6 rounded-lg bg-primary-900 flex items-center justify-center text-primary-400">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Seamless Integration</h3>
+          <p class="text-gray-400">
+            Connect with your favorite tools like GitHub, Jira, Slack, and more to create a unified workflow that fits your team's needs.
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <div class="bg-gradient-to-br from-blue-100 to-white p-6 rounded-2xl shadow hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold text-blue-700 mb-2">📝 Easy Reporting</h3>
-        <p class="text-gray-600">Submit detailed bug reports with environment info, screenshots, and more in seconds.</p>
-      </div>
-      <div class="bg-gradient-to-br from-purple-100 to-white p-6 rounded-2xl shadow hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold text-purple-700 mb-2">⏱ Real-Time Feedback</h3>
-        <p class="text-gray-600">Get real-time updates from developers as your issue gets reviewed and resolved.</p>
-      </div>
-      <div class="bg-gradient-to-br from-indigo-100 to-white p-6 rounded-2xl shadow hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold text-indigo-700 mb-2">🔒 Secure Platform</h3>
-        <p class="text-gray-600">Your reports are protected with encryption and securely managed through our system.</p>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="relative py-16 px-4 bg-gradient-to-b from-slate-900 to-slate-950">
+    <div class="container mx-auto max-w-7xl">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="glass rounded-xl p-6">
+          <p class="text-3xl md:text-4xl font-bold text-primary-400 mb-2">50k+</p>
+          <p class="text-gray-400">Bugs Squashed</p>
+        </div>
+        <div class="glass rounded-xl p-6">
+          <p class="text-3xl md:text-4xl font-bold text-primary-400 mb-2">10k+</p>
+          <p class="text-gray-400">Happy Developers</p>
+        </div>
+        <div class="glass rounded-xl p-6">
+          <p class="text-3xl md:text-4xl font-bold text-primary-400 mb-2">250+</p>
+          <p class="text-gray-400">Enterprise Clients</p>
+        </div>
+        <div class="glass rounded-xl p-6">
+          <p class="text-3xl md:text-4xl font-bold text-primary-400 mb-2">99.9%</p>
+          <p class="text-gray-400">Uptime</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- About Section -->
-  <main class="bg-white py-6 sm:py-8 lg:py-12">
-    <div class="mx-auto max-w-screen-xl px-4 md:px-8">
-      <div class="grid gap-8 md:grid-cols-2 lg:gap-12">
+  <section class="relative py-24 px-4">
+    <div class="container mx-auto max-w-7xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
-          <div class="h-97 overflow-hidden rounded-lg bg-gray-900 shadow-lg md:h-auto">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBTP-Y1-UBrcRNN0l3JJhl4k8Jscmz1voa7A&s"
-              loading="lazy" alt="Illustration" class="h-full w-full object-cover object-center" />
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-primary-500">About Bughead</span>
+          </h2>
+          <p class="text-gray-300 mb-6">
+            Bughead was born from a simple idea: make bug reporting accessible to everyone, not just developers. 
+            We believe that by bridging the gap between users and developers, software quality improves dramatically.
+          </p>
+          <p class="text-gray-300 mb-6">
+            Our platform simplifies the bug reporting process, enhances developer feedback loops, and helps build cleaner, 
+            better digital products that users love.
+          </p>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+            <div class="glass rounded-lg p-4 border-l-4 border-primary-500">
+              <h3 class="font-semibold text-white mb-1">Our Mission</h3>
+              <p class="text-sm text-gray-400">Make bug reporting seamless and accessible to everyone.</p>
+            </div>
+            <div class="glass rounded-lg p-4 border-l-4 border-primary-500">
+              <h3 class="font-semibold text-white mb-1">Our Vision</h3>
+              <p class="text-sm text-gray-400">A world with cleaner, more stable software for all users.</p>
+            </div>
           </div>
         </div>
-        <div class="md:pt-8">
-          <p class="text-center font-bold text-indigo-500 md:text-left">Who we are</p>
-          <h1 class="mb-4 text-center text-2xl font-bold text-gray-800 sm:text-3xl md:mb-6 md:text-left">Our Competitive Advantage</h1>
-          <p class="mb-6 text-gray-500 sm:text-lg md:mb-8">
-            Bughead simplifies bug reporting with intuitive tools and smooth developer feedback channels.
-          </p>
-
-          <h2 class="mb-2 text-center text-xl font-semibold text-gray-800 sm:text-2xl md
+        
+        <div class="glass rounded-xl p-6 overflow-hidden relative h-96">
+          <div class="absolute inset-0 -z-10 opacity-50">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary-600/20 to-primary-900/20"></div>
+          </div>
+          
+          <h3 class="font-semibold text-xl mb-6 text-primary-300">Our Technology Stack</h3>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div class="bg-slate-800/50 rounded-lg p-4 text-center hover-up">
+              <svg class="w-12 h-12 mx-auto mb-3 text-primary-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657
+             
