@@ -33,4 +33,6 @@ urlpatterns = [
     path("Bug-Traker/" , TemplateView.as_view(template_name="Bug-tracker.html"), name= "Bug-Tracker"),
     path("add-website/" , TemplateView.as_view(template_name="add-website.html"), name= "add-website"),
     path("", include("Issuecreator.urls") ),
+     path("footer/",TemplateView.as_view(template_name="footer.html"),name="footer"),
+     path("signup/",TemplateView.as_view(template_name="signup.html"),name="signup"),
 ]
