@@ -17,11 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("favicon.ico", RedirectView.as_view(url="/static/favicon.svg", permanent=False)),
     path("", TemplateView.as_view(template_name="index.html"),name="home"),
     path("Home/",TemplateView.as_view(template_name="home.html"),name="Home"),
     path("issueForm/" , TemplateView.as_view(template_name="issueForm.html"), name= "issueForm") ,

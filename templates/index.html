@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bughead - Modern Bug Tracking</title>
+  {% load static %}
+  <link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -98,79 +100,22 @@
 
 <body class="bg-slate-950 bg-mesh bg-grid text-gray-100 min-h-screen flex flex-col">
   <!-- Header -->
-  <header class="sticky top-0 z-50 glass">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center py-4">
-        <a href="/" class="flex items-center space-x-2">
-          <div
-            class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-900 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" viewBox="0 0 100 100" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M50 0C22.39 0 0 22.39 0 50s22.39 50 50 50c27.61 0 50-22.39 50-50H60c-5.52 0-10 4.48-10 10v10c0 5.52 4.48 10 10 10h20c0 16.57-13.43 30-30 30S20 66.57 20 50 33.43 20 50 20h40C90 8.96 70.82 0 50 0z" />
-            </svg>
-          </div>
-          <span
-            class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-primary-500">BUGHEAD</span>
-        </a>
-
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex items-center space-x-6">
-          <a href="#" class="line-indicator relative text-gray-300 hover:text-white">Home</a>
-          <a href="{% url 'bug-tracker' %}" class="line-indicator relative text-gray-300 hover:text-white">Bug Tracker</a>
-          <a href="{% url 'about' %}" class="line-indicator relative text-gray-300 hover:text-white">About</a>
-          <a href="#" class="line-indicator relative text-gray-300 hover:text-white">Contact</a>
-        </nav>
-
-        {% load static %}
-        {% if request.user.is_authenticated %}
-        <div class="hidden md:flex items-center space-x-4">
-          <a href="{% url 'dashboard' %}"
-            class="px-5 py-2 rounded-lg bg-gradient-to-r from-primary-600 to-primary-800 text-white font-bold shadow-lg shadow-primary-800/30 transition duration-300 hover:from-primary-500 hover:to-primary-700">
-            Dashboard
-          </a>
-          <form action="{% url 'logout' %}" method="post" class="inline">
-            {% csrf_token %}
-            <button type="submit"
-              class="px-5 py-2 rounded-lg bg-gradient-to-r from-red-600 to-red-800 text-white font-bold transition duration-300 hover:from-red-500 hover:to-red-700">
-              Logout
-            </button>
-          </form>
-        </div>
-        {% else %}
-        <div class="hidden md:flex items-center space-x-4">
-          <a href="{% url 'login' %}"
-            class="px-5 py-2 rounded-lg text-gray-200 border border-gray-700 hover:border-primary-500 transition duration-300">Login</a>
-          <a href="{% url 'register' %}"
-            class="px-5 py-2 rounded-lg bg-gradient-to-r from-primary-600 to-primary-800 text-white transition duration-300 animate-glow hover:from-primary-500 hover:to-primary-700">Sign
-            Up</a>
-        </div>
-        {% endif %}
-
-        <!-- Mobile Menu Button -->
-        <button id="mobile-menu-button" class="md:hidden text-gray-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden glass">
-      <div class="py-2 space-y-1">
-        <a href="#" class="block px-4 py-2 hover:bg-primary-900 hover:bg-opacity-30">Home</a>
-        <a href="{% url 'bug-tracker' %}" class="block px-4 py-2 hover:bg-primary-900 hover:bg-opacity-30">Bug Tracker</a>
-        <a href="{% url 'about' %}" class="block px-4 py-2 hover:bg-primary-900 hover:bg-opacity-30">About</a>
-        <a href="#" class="block px-4 py-2 hover:bg-primary-900 hover:bg-opacity-30">Contact</a>
-        <div class="pt-2 px-4 space-y-2">
-          <a href="login/"
-            class="block px-4 py-2 text-center rounded-lg text-gray-200 border border-gray-700 hover:border-primary-500">Login</a>
-          <a href="signup/"
-            class="block px-4 py-2 text-center rounded-lg bg-gradient-to-r from-primary-600 to-primary-800 text-white">Sign
-            Up</a>
-        </div>
-      </div>
+  <header class="flex justify-between items-center px-6 py-4 bg-black bg-opacity-60 shadow-md backdrop-blur-md">
+    <a href="/" class="flex items-center gap-2 text-2xl font-bold text-indigo-400">
+      <svg class="w-8 h-8" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 0C22.39 0 0 22.39 0 50s22.39 50 50 50c27.61 0 50-22.39 50-50H60c-5.52 0-10 4.48-10 10v10c0 5.52 4.48 10 10 10h20c0 16.57-13.43 30-30 30S20 66.57 20 50 33.43 20 50 20h40C90 8.96 70.82 0 50 0z"/>
+      </svg>
+      BUGHEAD
+    </a>
+    <nav class="space-x-6 text-sm md:text-base text-gray-300">
+      <a href="#" class="hover:text-indigo-300 transition">Home</a>
+      <a href="{% url 'bug-tracker' %}" class="hover:text-indigo-300 transition">Bug Tracker</a>
+      <a href="{% url 'about' %}" class="hover:text-indigo-300 transition">About</a>
+      <a href="#" class="hover:text-indigo-300 transition">Contact</a>
+    </nav>
+    <div class="space-x-4">
+      <a href="{% url 'login' %}" class="px-4 py-2 bg-indigo-500 rounded hover:bg-indigo-600 transition">Login</a>
+      <a href="{% url 'signup' %}" class="px-4 py-2 border border-indigo-500 rounded hover:bg-indigo-600 transition">Sign Up</a>
     </div>
   </header>
 
