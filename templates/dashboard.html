@@ -1,62 +1,137 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Your Websites</h1>
-        <a href="{% url 'add_website' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-            Add New Website
-        </a>
-    </div>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="mb-4 p-4 {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200{% else %}bg-green-100 text-green-700 border border-green-200{% endif %} rounded-md">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-
-    {% if websites %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for website in websites %}
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:transform hover:scale-105">
-                    <div class="p-5 border-b">
-                        <h2 class="text-lg font-semibold text-gray-800 truncate">{{ website.websitelink }}</h2>
-                        <p class="text-sm text-gray-600">Owner: {{ website.owner }}</p>
-                    </div>
-                    <div class="p-5">
-                        <div class="mb-3">
-                            <span class="text-sm font-medium text-gray-600">Site Key:</span>
-                            <span class="ml-2 text-sm bg-gray-100 p-1 rounded">{{ website.site_key }}</span>
-                        </div>
-                        <div class="mb-3">
-                            <span class="text-sm font-medium text-gray-600">GitHub:</span>
-                            <span class="ml-2 text-sm text-blue-600 truncate">{{ website.gitHubRepo }}</span>
-                        </div>
-                        <div class="text-sm text-gray-500">
-                            Added on: {{ website.create_at|date:"M d, Y" }}
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 p-4 flex justify-between">
-                        <a href="{% url 'website_detail' website.site_key %}" class="text-blue-600 hover:text-blue-800">
-                            Manage Website
-                        </a>
-                        <a href="{% url 'delete_website' website.site_key %}" class="text-red-600 hover:text-red-800">
-                            Delete
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="bg-blue-50 p-6 rounded-lg text-center">
-            <h3 class="text-xl font-medium text-blue-800 mb-3">No websites yet</h3>
-            <p class="text-blue-600 mb-4">Get started by adding your first website to generate a site key and bug reporting widget.</p>
-            <a href="{% url 'add_website' %}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">
-                Add Your First Website
+<div class="bg-slate-950 bg-mesh bg-grid text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold bg-clip-text text-white-800 bg-gradient-to-r from-primary-300 to-primary-500">Your Websites</h1>
+            <a href="{% url 'add_website' %}"
+                class="px-5 py-2 rounded-lg bg-gradient-to-r from-primary-600 to-primary-800 text-white font-bold shadow-lg shadow-primary-800/30 transition duration-300 hover:from-primary-500 hover:to-primary-700 animate-glow ring-2 ring-primary-400 ring-offset-2 ring-offset-slate-950">
+                Add New Website
             </a>
         </div>
-    {% endif %}
+
+        {% if messages %}
+        {% for message in messages %}
+        <div
+            class="mb-4 p-4 {% if message.tags == 'error' %}bg-red-900/50 text-red-300 border border-red-800{% else %}bg-green-900/50 text-green-300 border border-green-800{% endif %} rounded-md glass">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if websites %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for website in websites %}
+            <div class="glass rounded-xl overflow-hidden transition-transform hover:transform hover:scale-105 border border-gray-800 hover:border-primary-500">
+                <div class="p-5 border-b border-gray-800">
+                    <h2 class="text-lg font-semibold text-white truncate">{{ website.websitelink }}</h2>
+                    <p class="text-sm text-gray-400">Owner: {{ website.owner }}</p>
+                </div>
+                <div class="p-5">
+                    <div class="mb-3 flex items-center">
+                        <span class="text-sm font-medium text-gray-400 mr-2">Site Key:</span>
+                        <span id="site-key-{{ forloop.counter }}" class="text-sm bg-slate-800/70 p-1.5 rounded">{{ website.site_key }}</span>
+                        <button onclick="copySiteKey('{{ website.site_key }}', this)"
+                            class="ml-2 px-2 py-1 rounded bg-primary-700 hover:bg-primary-500 text-white text-xs font-semibold transition duration-150"
+                            title="Copy to clipboard">
+                            Copy
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <span class="text-sm font-medium text-gray-400">GitHub:</span>
+                        <span class="ml-2 text-sm text-primary-400 truncate">{{ website.gitHubRepo }}</span>
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        Added on: {{ website.create_at|date:"M d, Y" }}
+                    </div>
+                </div>
+                <div class="bg-slate-900/70 p-4 flex justify-between">
+                    <a href="{% url 'website_detail' website.site_key %}" class="text-primary-400 hover:text-primary-300 flex items-center">
+                        <span>Manage Website</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                    <a href="{% url 'delete_website' website.site_key %}" class="text-red-400 hover:text-red-300">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="glass rounded-xl p-8 text-center border border-gray-800">
+            <div class="w-16 h-16 mb-4 mx-auto relative">
+                <div class="absolute inset-0 rounded-full bg-gradient-to-br from-primary-400 to-primary-700 animate-pulse-slow">
+                </div>
+                <div class="absolute inset-2 rounded-full bg-slate-950 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-primary-400" viewBox="0 0 100 100" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M50 0C22.39 0 0 22.39 0 50s22.39 50 50 50c27.61 0 50-22.39 50-50H60c-5.52 0-10 4.48-10 10v10c0 5.52 4.48 10 10 10h20c0 16.57-13.43 30-30 30S20 66.57 20 50 33.43 20 50 20h40C90 8.96 70.82 0 50 0z" />
+                    </svg>
+                </div>
+            </div>
+            <h3 class="text-xl font-medium text-primary-300 mb-3">No websites yet</h3>
+            <p class="text-gray-400 mb-6">Get started by adding your first website to generate a site key and bug reporting
+                widget.</p>
+            <a href="{% url 'add_website' %}"
+                class="inline-block px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-800 hover:from-primary-500 hover:to-primary-700 rounded-lg text-white font-medium shadow-lg shadow-primary-800/30 transition duration-300 flex items-center justify-center gap-2 group mx-auto">
+                Add Your First Website
+                <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+        </div>
+        {% endif %}
+    </div>
 </div>
+
+<style>
+    .bg-grid {
+        background-image:
+            linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    .bg-mesh {
+        background-image:
+            radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(79, 70, 229, 0.15) 0%, transparent 50%);
+    }
+
+    .glass {
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @keyframes pulse-slow {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.6;
+        }
+    }
+
+    .animate-pulse-slow {
+        animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+</style>
+
+<script>
+    function copySiteKey(key, btn) {
+        navigator.clipboard.writeText(key).then(function() {
+            btn.innerText = "Copied!";
+            setTimeout(function() {
+                btn.innerText = "Copy";
+            }, 1200);
+        });
+    }
+</script>
 {% endblock %}

@@ -1,56 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - Bughead</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 text-white">
+{% extends 'layout.html' %}
 
-  <!-- Centered Sign-up Form -->
-  <div class="flex items-center justify-center min-h-screen">
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-    <div class="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md">
-      <h2 class="text-3xl font-semibold text-center mb-6">Sign Up</h2>
+  body {
+    font-family: 'Inter', sans-serif;
+  }
 
-      <!-- Form -->
-      <form action="#" method="POST">
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .bg-mesh {
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(79, 70, 229, 0.15) 0%, transparent 50%);
+  }
+
+  .glass {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.5); }
+    100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.8); }
+  }
+
+  .text-shadow {
+    text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+  }
+</style>
+
+<!-- Full-screen Gradient Background with Centered Signup -->
+<div class="flex flex-col justify-between min-h-screen bg-slate-950 bg-mesh bg-grid text-white font-sans">
+
+  <!-- Signup Card -->
+  <div class="flex items-center justify-center py-10 px-6 relative">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-32 -left-32 w-64 h-64 bg-primary-600 rounded-full filter blur-3xl opacity-20"></div>
+      <div class="absolute -bottom-32 -right-32 w-64 h-64 bg-primary-800 rounded-full filter blur-3xl opacity-20"></div>
+    </div>
+    
+    <div class="w-full max-w-md glass rounded-lg shadow-xl border border-indigo-500 p-8 animate-glow">
+      <div class="w-20 h-20 mb-6 mx-auto relative">
+        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-700">
+        </div>
+        <div class="absolute inset-2 rounded-full bg-slate-950 flex items-center justify-center">
+          <svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M50 0C22.39 0 0 22.39 0 50s22.39 50 50 50c27.61 0 50-22.39 50-50H60c-5.52 0-10 4.48-10 10v10c0 5.52 4.48 10 10 10h20c0 16.57-13.43 30-30 30S20 66.57 20 50 33.43 20 50 20h40C90 8.96 70.82 0 50 0z" />
+          </svg>
+        </div>
+      </div>
+      
+      <h2 class="text-3xl font-bold text-center mb-6 text-shadow">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 to-indigo-500">Create Your Account</span>
+      </h2>
+
+      {% if messages %}
+          {% for message in messages %}
+              <div class="mt-4 p-3 {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200{% else %}bg-green-100 text-green-700 border border-green-200{% endif %} rounded-md">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+      
+      <form method="post">
+        {% csrf_token %}
         <!-- Name -->
         <div class="mb-4">
-          <label for="name" class="block text-sm font-medium mb-2">Full Name</label>
-          <input type="text" id="name" name="name" class="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your full name" required>
+          <label class="block text-indigo-200 mb-1">Full Name</label>
+          <input type="text" id="name" name="name" class="w-full px-4 py-2 bg-slate-900/50 text-white border border-indigo-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200" placeholder="Enter your full name" required />
         </div>
-
+        
         <!-- Email -->
         <div class="mb-4">
-          <label for="email" class="block text-sm font-medium mb-2">Email Address</label>
-          <input type="email" id="email" name="email" class="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your email" required>
+          <label class="block text-indigo-200 mb-1">Email Address</label>
+          <input type="email" id="email" name="email" class="w-full px-4 py-2 bg-slate-900/50 text-white border border-indigo-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200" placeholder="Enter your email" required />
         </div>
-
+        
         <!-- Password -->
         <div class="mb-4">
-          <label for="password" class="block text-sm font-medium mb-2">Password</label>
-          <input type="password" id="password" name="password" class="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your password" required>
+          <label class="block text-indigo-200 mb-1">Password</label>
+          <input type="password" id="password" name="password" class="w-full px-4 py-2 bg-slate-900/50 text-white border border-indigo-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200" placeholder="Enter your password" required />
         </div>
-
+        
         <!-- Confirm Password -->
         <div class="mb-6">
-          <label for="confirm-password" class="block text-sm font-medium mb-2">Confirm Password</label>
-          <input type="password" id="confirm-password" name="confirm-password" class="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Confirm your password" required>
+          <label class="block text-indigo-200 mb-1">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" class="w-full px-4 py-2 bg-slate-900/50 text-white border border-indigo-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200" placeholder="Confirm your password" required />
         </div>
-
+        
         <!-- Submit Button -->
-        <div class="flex justify-center">
-          <button type="submit" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-all focus:outline-none">Sign Up</button>
-        </div>
+        <button type="submit" class="w-full py-2 px-4 bg-gradient-to-r from-indigo-600 to-indigo-800 hover:from-indigo-500 hover:to-indigo-700 rounded-lg text-white font-semibold transition-all duration-200 flex items-center justify-center">
+          Sign Up
+          <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
       </form>
-
-      <!-- Sign-in Link -->
-      <p class="text-center text-sm mt-4">Already have an account? <a href="sign-in.html" class="text-blue-400 hover:text-blue-500">Sign In</a></p>
+      
+      <!-- Login Link -->
+      <p class="text-indigo-200 text-center text-sm mt-6">Already have an account? 
+        <a href="{%url 'login'%}" class="text-indigo-400 hover:text-indigo-300 hover:underline transition-all duration-200">Login</a>
+      </p>
     </div>
-
   </div>
 
-</body>
-</html>
+</div>
+{% endblock content %}

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
+from Issuecreator.models import Website
 
 # Create your views here.
 def login_view(request):
@@ -39,37 +40,39 @@ def register_view(request):
     """
     View for handling user registration
     """
+    template_name = 'signup.html' if request.path.rstrip('/').endswith('signup') else 'register.html'
+
     if request.user.is_authenticated:
-        return redirect('dashboard')  # Redirect if already logged in
-    
+        return redirect('dashboard')
+
     if request.method == "POST":
-        username = request.POST.get('username')
+        username = request.POST.get('username') or request.POST.get('name')
         email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-        
-        # Validation
+        password1 = request.POST.get('password1') or request.POST.get('password')
+        password2 = request.POST.get('password2') or request.POST.get('confirm-password')
+
+        if not username or not email or not password1 or not password2:
+            messages.error(request, "All fields are required.")
+            return render(request, template_name)
+
         if password1 != password2:
             messages.error(request, "Passwords don't match.")
-            return render(request, 'register.html')
-        
+            return render(request, template_name)
+
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username is already taken.")
-            return render(request, 'register.html')
-        
+            return render(request, template_name)
+
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email is already registered.")
-            return render(request, 'register.html')
-        
-        # Create user
+            return render(request, template_name)
+
         user = User.objects.create_user(username=username, email=email, password=password1)
-        
-        # Log the user in
         login(request, user)
         messages.success(request, "Registration successful!")
         return redirect('dashboard')
-    
-    return render(request, 'register.html')
+
+    return render(request, template_name)
 
 def logout_view(request):
     """
@@ -84,8 +87,11 @@ def dashboard(request):
     """
     Dashboard view (requires login)
     """
+    # Fetch websites added by the current user
+    websites = Website.objects.filter(user=request.user).order_by('-create_at')
     return render(request, 'dashboard.html', {
-        'user': request.user
+        'user': request.user,
+        'websites': websites
     })
 
 @login_required
@@ -107,3 +113,5 @@ def profile(request):
     return render(request, 'profile.html', {
         'user': request.user
     })
+
+

@@ -28,7 +28,7 @@ urlpatterns = [
     path('widget/<uuid:site_key>.js', views.get_widget_script, name='widget_script'),
     
     # Dashboard URLs
-    path('dashboard/', views.dashboard, name='dashboard'),
+    # path('dashboard/', views.dashboard, name='dashboard'),
     path('website/<uuid:site_key>/', views.website_detail, name='website_detail'),
     path('website/add/', views.add_website, name='add_website'),
     path('website/<uuid:site_key>/delete/', views.delete_website, name='delete_website'),

@@ -1,4 +1,3 @@
-import asyncio
 import threading
 import os  # Add this for the widget script function
 from django.shortcuts import render, redirect, get_object_or_404
@@ -14,21 +13,18 @@ from .serializers import IssueSerializer, WebsiteSerializer
 # Import both async and sync handlers
 from .issueHandler import handle_new_issue, handle_issue_sync
 from django.conf import settings
-from asgiref.sync import sync_to_async
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+import uuid
 
 # Create your views here.
 
-def run_async_task(coroutine):
-    """Helper function to run an async task in the background"""
-    async def wrapper():
-        await coroutine
-    
-    loop = asyncio.new_event_loop()
-    threading.Thread(target=lambda: asyncio.run(wrapper())).start()
+def run_async_task(func, *args, **kwargs):
+    """Run a synchronous task in a background thread."""
+    threading.Thread(target=func, args=args, kwargs=kwargs, daemon=True).start()
 
 @csrf_exempt  # Exempt from CSRF for cross-origin requests
 @api_view(['POST'])
@@ -41,9 +37,10 @@ def create_issue(request):
         site_key = data.pop('site_key', None)
         if site_key:
             try:
+                uuid.UUID(str(site_key))
                 website = Website.objects.get(site_key=site_key)
-                data['website'] = website.id  # Add website ID to data
-            except Website.DoesNotExist:
+                data['website'] = website.id
+            except (Website.DoesNotExist, ValueError, ValidationError, AttributeError, TypeError):
                 return Response({"error": "Invalid site key"}, status=status.HTTP_400_BAD_REQUEST)
         
         serializer = IssueSerializer(data=data)
@@ -51,7 +48,7 @@ def create_issue(request):
             issue = serializer.save()
             
             # Process the issue using the synchronous handler
-            run_async_task(sync_to_async(handle_issue_sync)(issue.id))
+            run_async_task(handle_issue_sync, issue.id)
             
             return Response({
                 "message": "Issue created successfully and being processed",
@@ -92,18 +89,15 @@ def website_list(request):
 
 def get_widget_script(request, site_key):
     try:
-        website = Website.objects.get(site_key=site_key)
-        
-        # Read the widget template
-        with open(os.path.join(settings.BASE_DIR, 'static', 'js', 'widget-template.js'), 'r') as f:
-            script_template = f.read()
-            
-        # Replace placeholder with actual site key
-        script = script_template.replace('{{site_key}}', str(site_key))
-        
+        Website.objects.get(site_key=site_key)
+        script_path = os.path.join(settings.BASE_DIR, 'static', 'main.js')
+        with open(script_path, 'r', encoding='utf-8') as f:
+            script = f.read()
         return HttpResponse(script, content_type='application/javascript')
     except Website.DoesNotExist:
         return HttpResponse('console.error("Invalid site key");', content_type='application/javascript')
+    except FileNotFoundError:
+        return HttpResponse('console.error("Widget script not found");', content_type='application/javascript')
 
 def register_view(request):
     """
@@ -156,13 +150,13 @@ def register_view(request):
 @login_required
 def dashboard(request):
     """
-    Dashboard view for authenticated users to manage their websites
+    Dashboard view for authenticated users to manage and view all websites
     """
-    # Get all websites owned by the current user
-    websites = Website.objects.filter(user=request.user).order_by('-create_at')
-    
+    # Get all websites (not just the user's)
+    all_websites = Website.objects.all().order_by('-create_at')
+    print(all_websites)
     return render(request, 'dashboard.html', {
-        'websites': websites
+        'all_websites': all_websites
     })
 
 @login_required
@@ -177,9 +171,13 @@ def website_detail(request, site_key):
     issues = Issue.objects.filter(website=website).order_by('-id')  # Changed from 'created_at' to 'id'
     
     # Generate widget embed code for this website
-    embed_code = f'<script src="{request.scheme}://{request.get_host()}/widget/{site_key}.js"></script>'
+    embed_code = f'''
+    <link rel="stylesheet" href="main.css">
+    <div id="issue-tracker" data-site-key="{site_key}"></div>
+  <script src="main.js"></script>
+'''
     
-    return render(request, 'website_detail.html', {
+    return render(request, 'websiteDetail.html', {
         'website': website,
         'issues': issues,
         'embed_code': embed_code
@@ -233,3 +231,7 @@ def delete_website(request, site_key):
     return render(request, 'delete_website_confirm.html', {
         'website': website
     })
+
+# def website_list(request):
+#     websites = Website.objects.all()
+#     return render(request, 'website_list.html', {'websites': websites})

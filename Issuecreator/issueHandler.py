@@ -3,10 +3,9 @@ import json
 import logging
 from typing import Dict, List, Any, Optional
 import requests
-import google.generativeai as genai
 from django.conf import settings
 from .models import Issue, Website
-from asgiref.sync import sync_to_async  # Add this import
+from asgiref.sync import sync_to_async
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -14,9 +13,6 @@ logger = logging.getLogger(__name__)
 # Configure API keys
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN') or settings.GITHUB_TOKEN
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY') or settings.GEMINI_API_KEY
-
-# Configure Gemini
-genai.configure(api_key=GEMINI_API_KEY)
 
 class IssueHandler:
     """
@@ -85,16 +81,33 @@ class IssueHandler:
         """
         
         try:
-            logger.debug("Sending request to Gemini AI")
-            # Generate response from Gemini
-            model = genai.GenerativeModel('gemini-1.5-pro')
-            response = await model.generate_content_async(prompt)
+            logger.debug("Sending request to Gemini AI via REST API")
+            
+            def make_gemini_request():
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key={GEMINI_API_KEY}"
+                headers = {'Content-Type': 'application/json'}
+                payload = {"contents": [{"parts": [{"text": prompt}]}]}
+                res = requests.post(url, headers=headers, json=payload, timeout=30)
+                res.raise_for_status()
+                data = res.json()
+                return data['candidates'][0]['content']['parts'][0]['text']
+            
+            response_text = await sync_to_async(make_gemini_request)()
             logger.debug("Received response from Gemini AI")
             
             # Parse the JSON response
             try:
-                logger.debug(f"Parsing AI response: {response.text[:100]}...")
-                result = json.loads(response.text)
+                # Remove markdown code block if present
+                clean_text = response_text.strip()
+                if clean_text.startswith('```json'):
+                    clean_text = clean_text[7:]
+                if clean_text.startswith('```'):
+                    clean_text = clean_text[3:]
+                if clean_text.endswith('```'):
+                    clean_text = clean_text[:-3]
+                    
+                logger.debug(f"Parsing AI response: {clean_text[:100]}...")
+                result = json.loads(clean_text)
                 enhanced_data = {
                     'enhanced_description': result.get('description', issue_data.get('IssueDetail', '')),
                     'suggested_tags': result.get('tags', []),
@@ -103,7 +116,7 @@ class IssueHandler:
                 logger.info(f"AI enhancement successful. Tags: {enhanced_data['suggested_tags']}, Severity: {enhanced_data['severity']}")
                 return enhanced_data
             except json.JSONDecodeError:
-                logger.error(f"Failed to parse AI response as JSON: {response.text[:200]}")
+                logger.error(f"Failed to parse AI response as JSON: {response_text[:200]}")
                 # Fallback if AI doesn't return valid JSON
                 return {
                     'enhanced_description': issue_data.get('IssueDetail', ''),

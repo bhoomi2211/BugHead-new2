@@ -104,10 +104,10 @@
     <div>
       <h3 class="text-indigo-400 font-semibold mb-3">Navigation</h3>
       <ul class="space-y-2 text-sm">
-        <li><a href="index.html" class="hover:text-white">Home</a></li>
-        <li><a href="bug-tracker.html" class="hover:text-white">Bug Tracker</a></li>
-        <li><a href="about.html" class="hover:text-white">About</a></li>
-        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        <li><a href="{% url 'home' %}" class="hover:text-white">Home</a></li>
+        <li><a href="{% url 'bug-tracker' %}" class="hover:text-white">Bug Tracker</a></li>
+        <li><a href="{% url 'about' %}" class="hover:text-white">About</a></li>
+        <li><a href="#" class="hover:text-white">Contact</a></li>
       </ul>
     </div>
 

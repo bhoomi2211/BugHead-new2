@@ -11,12 +11,12 @@
   <!-- Header -->
   <header class="bg-teal-600 text-white p-4 flex justify-between items-center">
     <div class="flex space-x-4">
-      <a href="home.html" class="hover:underline">Home</a>
-      <a href="about.html" class="hover:underline">About</a>
+      <a href="{% url 'home' %}" class="hover:underline">Home</a>
+      <a href="{% url 'about' %}" class="hover:underline">About</a>
       <a href="#" class="hover:underline">Serach</a>
       <a href="#" class="hover:underline">Filter</a>
       <a href="#" class="hover:underline">Conatct Us</a>
-      <a href="devloper-dashboard.html" class="hover:underline">Devloper DashBoard</a>
+      <a href="{% url 'devloperdashboard' %}" class="hover:underline">Devloper DashBoard</a>
     </div>
     
   </header>
