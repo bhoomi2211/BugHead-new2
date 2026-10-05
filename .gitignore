@@ -1,47 +1,23 @@
-# Python Environment
+# Environment variables
+.env
+.env.*
 
+# Allow example template
+!.env.example
+
+# Python virtual environment
 .venv/
 venv/
 env/
 
 # Python cache
-
-**pycache**/
+__pycache__/
 *.py[cod]
 
-# Django database
-
-db.sqlite3
-db.sqlite3-journal
-
-# Environment variables
-
-.env
-.env.*
-
-# Logs
-
-*.log
-logs/
-
-# Django generated files
-
+# Django
 staticfiles/
+media/
+*.log
 
-# Node
-
-node_modules/
-dist/
-dist-ssr/
-*.local
-
-# Editor
-
-.vscode/*
-!.vscode/extensions.json
-.idea/
-.DS_Store
-
-# OS
-
-Thumbs.db
+# Database
+db.sqlite3
