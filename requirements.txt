@@ -34,6 +34,7 @@ executing==2.2.1
 Flask==3.1.3
 Flask-SQLAlchemy==3.1.1
 frozendict @ file:///C:/miniconda3/conda-bld/frozendict_1761750728192/work
+git-filter-repo==2.47.0
 google-ai-generativelanguage==0.6.15
 google-api-core==2.33.0
 google-api-python-client==2.200.0
